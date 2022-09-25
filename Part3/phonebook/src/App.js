@@ -21,60 +21,33 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    // Empty number or name
-    if(newName === "" || newNumber === ""){
-      setMessage({text:`Please fill the name and the number`, style: "error"})
-      setTimeout(() => {setMessage(null)}, 5000)
-    }
-    // Already in phonebook. 
-    else if (persons.find(p => p.name === newName)){
-      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        const person = persons.find(p => p.name === newName)
-        const id = person.id
-        const changedPerson = { ...person, number: newNumber}
-        api.update(id, changedPerson)
-          .then(res => {
-            setPersons(persons.map(person => person.id !== id ? person :res))
-            setMessage({text:`Changed successfully the number of ${person.name}`,style: "success"})
-            setTimeout(() => {setMessage(null)}, 5000)
-            setNewNumber('')
-            setNewName('')
-          }).catch(error => {
-            setMessage({text:`Person '${person.name}' has already removed from server`, style: "error"})
-            setTimeout(() => {setMessage(null)}, 5000)
-            setPersons(persons.filter(p => p.id !== id))
-          })
-      }
-    }// New name
-    else{
-      const noteObject = {name: newName, number: newNumber}
-      api.create(noteObject)
-        .then(res => {
-        setPersons(persons.concat(res))
-        setNewNumber('')
-        setNewName('')
-      })
-
-      setMessage({text: `Added ${newName}`, style: 'success'})
-      setTimeout(() => {setMessage(null)}, 5000)
-    } 
+    const noteObject = {name: newName, number: newNumber}
+    api.create(noteObject)
+    .then(res => {
+      setPersons(persons.concat(res.data))
+      setNewNumber('')
+      setNewName('')
+      setMessage({text: `Added ${newName}`, style: 'success'}) 
+    })
+    .catch(err => {
+      setMessage({text:err.response.data.error, style: "error"})
+    })
+    setTimeout(() => {setMessage(null)}, 5000)
   }
   
   const deletePerson = id => {
     const person = persons.find(person => person.id === id)
     if (window.confirm(`Delete ${person.name}?`)){
       api.remove(id)
-      .then(p => {
+      .then(res => {
         setPersons(persons.filter(person => person.id !== id))
         setMessage({text:`Successfully removed ${person.name}`, style: "success"})
-        setTimeout(() => {setMessage(null)}, 5000)
       })
-      .catch(error => {
-        setMessage({text:`Person '${person.name}' has already removed from server`, style: "error"})
-        setTimeout(() => {setMessage(null)}, 5000)
-        setPersons(persons.filter(p => p.id !== id))
+      .catch(err => {
+        setMessage({text:err.response.data.error, style: "error"})
       })
     }  
+    setTimeout(() => {setMessage(null)}, 5000)
   }
   
   useEffect(() => {

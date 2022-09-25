@@ -13,7 +13,7 @@ const Persons = ({filter, persons, deletePerson}) => {
   return (
     <ul style={{listStyle: 'none'}}>
         {persons.filter(obj => obj.name.toLowerCase().includes(filter.toLowerCase()))
-          .map(obj => <Person key={obj.name} obj={obj} deletePerson={()=>deletePerson(obj.id)}/>)}
+          .map(obj => <Person key={obj.id} obj={obj} deletePerson={()=>deletePerson(obj.id)}/>)}
     </ul>
   )
 }

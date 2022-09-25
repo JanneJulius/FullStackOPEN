@@ -1,4 +1,3 @@
-
 const Filter = ({filter, handleFilter}) => {
 
   return (
