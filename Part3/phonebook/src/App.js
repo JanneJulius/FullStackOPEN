@@ -20,14 +20,30 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+    const person = persons.find(person => person.name === newName)
+    const personObject = {name: newName, number: newNumber}
+    let apiMethod
 
-    const noteObject = {name: newName, number: newNumber}
-    api.create(noteObject)
+    if(person){
+      if (window.confirm(`${newName} already exists, update number?`)){
+        apiMethod = api.update(person.id, personObject)
+      }
+    }else{
+      apiMethod = api.create(personObject)
+    }
+
+    apiMethod
     .then(res => {
-      setPersons(persons.concat(res.data))
+      if(person){
+
+        setPersons(persons.map(p => p.id !== person.id ? p :res.data))
+        setMessage({text: `${newName} updated`, style: 'success'})
+      }else{
+        setPersons(persons.concat(res.data))
+        setMessage({text: `Added ${newName}`, style: 'success'}) 
+      }
       setNewNumber('')
       setNewName('')
-      setMessage({text: `Added ${newName}`, style: 'success'}) 
     })
     .catch(err => {
       setMessage({text:err.response.data.error, style: "error"})
@@ -72,7 +88,6 @@ const App = () => {
       <Persons filter={filter} persons={persons} deletePerson={deletePerson}/>
     </>
   )
-
 }
 
 export default App
