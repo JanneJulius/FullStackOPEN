@@ -33,7 +33,6 @@ describe('api tests', () => {
       await api
         .get('/api/blogs')
         .expect(200)
-        .set('Authorization', token)
         .expect('Content-Type', /application\/json/)
     })
 
@@ -47,7 +46,6 @@ describe('api tests', () => {
     test('all blogs are returned', async () => {
       const response = await api
         .get('/api/blogs')
-        .set('Authorization', token)
   
       expect(response.body).toHaveLength(helper.initialBlogs.length)
     })
@@ -55,47 +53,9 @@ describe('api tests', () => {
     test('a specific blog is within the returned blogs', async () => {
       const response = await api
         .get('/api/blogs')
-        .set('Authorization', token)
   
       const titles = response.body.map(r => r.title)
       expect(titles).toContain('React patterns')
-    })
-  })
-
-  describe('viewing a specific blog', () => {
-
-    test('succeeds with a valid id', async () => {
-      const blogsAtStart = await helper.blogsInDB()
-
-      const blogToView = blogsAtStart[0]
-
-      const resultBlog = await api
-        .get(`/api/blogs/${blogToView.id}`)
-        .set('Authorization', token)
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
-      
-      const processedBlogToView = JSON.parse(JSON.stringify(blogToView))
-
-      expect(resultBlog.body).toEqual(processedBlogToView)
-    })
-
-    test('fails with statuscode 404 if blog does not exist', async () => {
-      const validNonexistingId = await helper.nonExistingId()
-
-      await api
-        .get(`/api/blogs/${validNonexistingId}`)
-        .set('Authorization', token)
-        .expect(404)
-    })
-
-    test('fails with statuscode 400 if id is invalid', async () => {
-      const invalidId = '5a3d5da59070081a82a3445'
-
-      await api
-        .get(`/api/blogs/${invalidId}`)
-        .set('Authorization', token)
-        .expect(400)
     })
   })
   
