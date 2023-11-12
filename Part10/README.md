@@ -5,14 +5,14 @@
 ## Images from the App
 Repositories View            |  Repository View
 :-------------------------:|:-------------------------:
-![](./Images/Basic.png)  |  ![](./Images/RepositoryDetail.png)
+![](../Images/Basic.png)  |  ![](../Images/RepositoryDetail.png)
 
 <br>
 <br>
 
 Searching with word          |  Sorting
 :-------------------------:|:-------------------------:
-![](./Images/Keyword.png)  |  ![](./Images/Sorting.png)
+![](../Images/Keyword.png)  |  ![](../Images/Sorting.png)
 
 
 <br>
@@ -20,11 +20,11 @@ Searching with word          |  Sorting
 
 My Reviews        |  Create a new Review
 :-------------------------:|:-------------------------:
-![](./Images/MyReviews.png)  |  ![](./Images/CreateReview.png)
+![](../Images/MyReviews.png)  |  ![](../Images/CreateReview.png)
 
 <br>
 <br>
 
 Sign Up       |  Login
 :-------------------------:|:-------------------------:
-![](./Images/Signup.png)  |  ![](./Images/Login.png)
+![](../Images/Signup.png)  |  ![](../Images/Login.png)
