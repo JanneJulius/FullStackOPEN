@@ -2,10 +2,6 @@
 
 - Exercises for the Fullstack Open Course from the University of Helsinki.
 
-## Certificates
-![Use cases](/Certificates/certificate-fullstack.png)
-![Use cases](/Certificates/certificate-graphql.png)
-
 ## [Part 0](https://github.com/JanneJulius/FullStackOPEN/tree/main/Part0)
 - In this part, we will familiarize ourselves with the practicalities of taking the course.
 - After that, we will have an overview of the basics of web development and also talk about the advances in web application development during the last few decades.
@@ -48,3 +44,15 @@
 ## [Part 10](https://github.com/JanneJulius/FullStackOPEN/tree/main/Part10)
 - In this part, we will learn how to build native Android and iOS mobile applications with JavaScript and React using the React Native framework. We will dive into the React Native ecosystem by developing an entire mobile application from scratch.
 - Along the way, we will learn concepts such as how to render native user interface components with React Native, how to create beautiful user interfaces, how to communicate with a server, and how to test a React Native application.
+<p align="center">
+  <img src="/Images/Basic.png" height="800" alt="Use cases">
+</p>
+
+
+## Certificates
+### Basic Course 7 credits
+![Use cases](/Certificates/certificate-fullstack.png)
+### GraphQL 1 credit
+![Use cases](/Certificates/certificate-graphql.png)
+### React Native 2 credits
+![Use cases](/Certificates/certificate-reactnative.png)
