@@ -44,15 +44,27 @@
 ## [Part 10](https://github.com/JanneJulius/FullStackOPEN/tree/main/Part10)
 - In this part, we will learn how to build native Android and iOS mobile applications with JavaScript and React using the React Native framework. We will dive into the React Native ecosystem by developing an entire mobile application from scratch.
 - Along the way, we will learn concepts such as how to render native user interface components with React Native, how to create beautiful user interfaces, how to communicate with a server, and how to test a React Native application.
-<p align="center">
-  <img src="/Images/Basic.png" height="800" alt="Use cases">
-</p>
+<br>
 
+Repositories View            |  Repository View
+:-------------------------:|:-------------------------:
+![](Images/Basic.png)  |  ![](Images/RepositoryDetail.png)
+
+<br>
+<br>
 
 ## Certificates
+<br>
+
 ### Basic Course 7 credits
 ![Use cases](/Certificates/certificate-fullstack.png)
+<br>
+
 ### GraphQL 1 credit
 ![Use cases](/Certificates/certificate-graphql.png)
+<br>
+
 ### React Native 2 credits
 ![Use cases](/Certificates/certificate-reactnative.png)
+<br>
+
