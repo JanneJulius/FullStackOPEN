@@ -105,8 +105,6 @@ const lowerPart = ({ item }) => {
 };
 
 const RepositoryItem = ({ item }) => {
-  //console.log(item.id);
-
   const navigate = useNavigate();
 
   const handlePress = () => {

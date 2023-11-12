@@ -110,7 +110,6 @@ const CreateReview = () => {
         repositoryName,
         text,
       });
-      console.log(res);
 
       if (res) {
         navigate(`/repository/${res.repositoryId}`);
@@ -122,7 +121,6 @@ const CreateReview = () => {
         text2: error.message,
         position: "top",
       });
-      console.log("error", error);
     }
   };
 

@@ -15,6 +15,12 @@ import Text from "./Text";
 import Review from "./Review";
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "white",
+    marginRight: 5,
+    marginLeft: 5,
+    borderRadius: 10,
+  },
   button: {
     backgroundColor: theme.colors.languageColor,
     marginTop: 0,
@@ -67,7 +73,7 @@ const RepositoryDetail = () => {
       renderItem={({ item }) => <Review item={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => (
-        <View style={{ backgroundColor: "white" }}>
+        <View style={styles.header}>
           <RepositoryItem item={repository} />
           <CustomButton title="Open in GitHub" onPress={handleOpenGitHub} />
         </View>

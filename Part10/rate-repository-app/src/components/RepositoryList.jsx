@@ -1,93 +1,92 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORIES } from "../graphql/queries";
-import Text from "./Text";
 import React, { useState } from "react";
 import Select from "./Picker";
 import { Searchbar } from "react-native-paper";
+import theme from "../theme";
+import { useDebounce } from "use-debounce";
+import useRepositories from "../hooks/useRepositories";
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
+  searchContainer: {
+    backgroundColor: theme.colors.barColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 10,
+  },
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({
-  repositories,
-  selectedValue,
-  setSelectedValue,
-  searchQuery,
-  setSearchQuery,
-}) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const { selectedValue, setSelectedValue, searchQuery, setSearchQuery } =
+      this.props;
+    return (
+      <>
+        <View style={styles.searchContainer}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={(query) => setSearchQuery(query)}
+            value={searchQuery}
+            theme={{
+              colors: {
+                onSurface: "white",
+                onSurfaceVariant: "white",
+                outline: "white",
+                elevation: {
+                  level3: theme.colors.barColor,
+                },
+              },
+            }}
+          />
+        </View>
+        <Select
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+        />
+      </>
+    );
+  };
 
-  return (
-    <View>
+  render() {
+    const { repositories, onEndReach } = this.props;
+    const repositoryNodes = repositories
+      ? repositories.edges.map((edge) => edge.node)
+      : [];
+
+    return (
       <FlatList
         data={repositoryNodes}
-        ItemSeparatorComponent={ItemSeparator}
+        keyExtractor={({ id }) => id}
+        ListHeaderComponent={this.renderHeader}
         renderItem={({ item }) => <RepositoryItem item={item} />}
-        ListHeaderComponent={() => (
-          <View style={styles.container}>
-            <Select
-              selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}
-            />
-          </View>
-        )}
+        ItemSeparatorComponent={ItemSeparator}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
-    </View>
-  );
-};
-
-const getVariables = ({ selectedValue }) => {
-  switch (selectedValue) {
-    case "Latest repositories":
-      return {
-        orderBy: "CREATED_AT",
-        orderDirection: "ASC",
-      };
-    case "Highest rated repositories":
-      return {
-        orderBy: "RATING_AVERAGE",
-        orderDirection: "DESC",
-      };
-    case "Lowest rated repositories":
-      return {
-        orderBy: "RATING_AVERAGE",
-        orderDirection: "ASC",
-      };
-
-    default:
-      return {
-        orderBy: "CREATED_AT",
-        orderDirection: "ASC",
-      };
+    );
   }
-};
+}
+
 const RepositoryList = () => {
   const [selectedValue, setSelectedValue] = useState("Latest repositories");
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchKeyword] = useDebounce(searchQuery, 500);
 
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network",
-    variables: getVariables({ selectedValue }),
+  const { repositories, fetchMore } = useRepositories({
+    selectedSort: selectedValue,
+    searchKeyword: searchKeyword,
+    first: 4,
   });
 
-  if (loading) {
-    return <Text>Loading repositories...</Text>;
-  }
-
-  if (error) {
-    return <Text>Error fetching repositories</Text>;
-  }
-
-  const repositories = data.repositories;
+  const onEndReach = () => {
+    fetchMore();
+    //console.log("You have reached the end of the list");
+  };
 
   return (
     <RepositoryListContainer
@@ -96,6 +95,7 @@ const RepositoryList = () => {
       setSelectedValue={setSelectedValue}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
+      onEndReach={onEndReach}
     />
   );
 };

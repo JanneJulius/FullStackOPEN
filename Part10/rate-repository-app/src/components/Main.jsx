@@ -11,6 +11,7 @@ import Constants from "expo-constants";
 import CreateReview from "./CreateReview";
 import Toast from "react-native-toast-message";
 import SignUp from "./SignUp";
+import MyReviews from "./MyReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,7 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/repository/:id" element={<RepositoryDetail />} />
+        <Route path="/myreviews" element={<MyReviews />} />
         <Route path="/signin" element={<SignIn setToken={setToken} />} />
         <Route path="/signup" element={<SignUp setToken={setToken} />} />
         <Route path="/create" element={<CreateReview />} />
